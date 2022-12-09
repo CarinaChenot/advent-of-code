@@ -16,30 +16,6 @@ const tailPosition = {
 const tailVisitedPlaces = [];
 tailVisitedPlaces.push(`${tailPosition.x}, ${tailPosition.y}`);
 
-const outputGrid = () => {
-  let string = '';
-
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 6; j++) {
-
-      if (headPosition.y === i && headPosition.x === j) {
-        string += 'H';
-      } else if (tailPosition.y === i && tailPosition.x === j) {
-        string += 'T';
-      } else {
-        string += '.';
-      }
-
-      if (j === 5) {
-        string += '\n';
-      }
-    }
-  }
-
-  return string;
-};
-
-
 const move = (axis, number) => {
   headPosition[axis] += number;
 
