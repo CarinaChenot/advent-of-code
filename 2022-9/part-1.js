@@ -3,21 +3,42 @@ const path = require('path');
 
 const contents = fs.readFileSync(path.resolve(__dirname, 'input.txt')).toString('utf-8').trim();
 
-const numbersTotal = 500;
-
-const grid = [...Array(numbersTotal * 2).fill(Array(numbersTotal * 2).fill(0))];
-
 const headPosition = {
-  x: numbersTotal,
-  y: numbersTotal,
+  x: 0,
+  y: 0,
 };
 
 const tailPosition = {
-  x: numbersTotal,
-  y: numbersTotal,
+  x: 0,
+  y: 0,
 };
 
-grid[tailPosition.x][tailPosition.y]++;
+const tailVisitedPlaces = [];
+tailVisitedPlaces.push(`${tailPosition.x}, ${tailPosition.y}`);
+
+const outputGrid = () => {
+  let string = '';
+
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 6; j++) {
+
+      if (headPosition.y === i && headPosition.x === j) {
+        string += 'H';
+      } else if (tailPosition.y === i && tailPosition.x === j) {
+        string += 'T';
+      } else {
+        string += '.';
+      }
+
+      if (j === 5) {
+        string += '\n';
+      }
+    }
+  }
+
+  return string;
+};
+
 
 const move = (axis, number) => {
   headPosition[axis] += number;
@@ -46,7 +67,7 @@ const move = (axis, number) => {
     }
   }
 
-  grid[tailPosition.x][tailPosition.y]++;
+  tailVisitedPlaces.push(`${tailPosition.x}, ${tailPosition.y}`);
 };
 
 contents.split('\n').forEach((line) => {
@@ -70,14 +91,5 @@ contents.split('\n').forEach((line) => {
   }
 });
 
-const positionsTailVisitedCount = grid.reduce((sumA, currentVal) => {
-  return currentVal.reduce((sum, currentVal2) => {
-    return currentVal2 > 0 ? sum + 1 : sum;
-  }, 0);
-}, 0);
+console.log(new Set(tailVisitedPlaces).size);
 
-console.log(positionsTailVisitedCount);
-
-if (positionsTailVisitedCount >= 88800 || positionsTailVisitedCount === 8888 || positionsTailVisitedCount === 376) {
-  console.log('wrong');
-}
