@@ -59,7 +59,7 @@ const compareValues = (left, right) => {
   }
 }
 
-const pairs = textPairs.map(eval);
+const pairs = textPairs.map(JSON.parse);
 pairs.sort((left, right) => compareArrays(left, right) ? -1 : 1);
 
 const decoderKey = dividerPackets.map((dividerPacket) => pairs.map(JSON.stringify).indexOf(dividerPacket) + 1).reduce((sum, currentValue) => sum * currentValue, 1)

@@ -8,7 +8,7 @@ const pairs = contents.split('\n\n');
 const handlePair = (pair, i) => {
   console.log(`== Pair ${i + 1} ==`)
 
-  const [firstPacket, secondPacket] = pair.split('\n').map(string => eval(string))
+  const [firstPacket, secondPacket] = pair.split('\n').map(string => JSON.parse(string))
 
   return compareArrays(firstPacket, secondPacket)
 }
