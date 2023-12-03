@@ -1,8 +1,13 @@
 const fs = require('fs');
-const input = fs.readFileSync('input.txt').toString('utf-8').trim();
+const input = fs.readFileSync('example.txt').toString('utf-8').trim();
 
 const GEAR = '*';
 const grid = input.split('\n');
+/**
+ * An object storing the adjacent numbers for
+ * each gear coordinates
+ * @example { '31': [ '467', '35' ] }
+ */
 const gearCoordinatesWithAdjacentNumbers = {};
 let key;
 
