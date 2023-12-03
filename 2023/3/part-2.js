@@ -9,7 +9,14 @@ const grid = input.split('\n');
  * @example { '3,1': [ '467', '35' ] }
  */
 const gearCoordinatesWithAdjacentNumbers = {};
-let key;
+
+const recordAdjacentNumberForCoordinates = (coordinates, number) => {
+  if (gearCoordinatesWithAdjacentNumbers[coordinates]) {
+    gearCoordinatesWithAdjacentNumbers[coordinates].push(number);
+  } else {
+    gearCoordinatesWithAdjacentNumbers[coordinates] = [number];
+  }
+};
 
 for (let y = 0; y < grid.length; y++) {
   const numbersInRowMatches = [...grid[y].matchAll(/\d+/g)];
@@ -21,45 +28,23 @@ for (let y = 0; y < grid.length; y++) {
 
     // check left of number
     if (grid[y][start] === GEAR) {
-      key = start + ',' + y;
-      if (gearCoordinatesWithAdjacentNumbers[key]?.length) {
-        gearCoordinatesWithAdjacentNumbers[key].push(number);
-      } else {
-        gearCoordinatesWithAdjacentNumbers[key] = [number];
-      }
+      recordAdjacentNumberForCoordinates(start + ',' + y, number);
     }
 
     // check right of number
     if (grid[y][end] === GEAR) {
-      key = end + ',' + y;
-      if (gearCoordinatesWithAdjacentNumbers[key]?.length) {
-        gearCoordinatesWithAdjacentNumbers[key].push(number);
-      } else {
-        gearCoordinatesWithAdjacentNumbers[key] = [number];
-      }
+      recordAdjacentNumberForCoordinates(end + ',' + y, number);
     }
 
-    // check top of number
     for (let x = start; x <= end; x++) {
+      // check top of number
       if (grid[y - 1]?.[x] === GEAR) {
-        key = x + ',' + (y - 1);
-        if (gearCoordinatesWithAdjacentNumbers[key]?.length) {
-          gearCoordinatesWithAdjacentNumbers[key].push(number);
-        } else {
-          gearCoordinatesWithAdjacentNumbers[key] = [number];
-        }
+        recordAdjacentNumberForCoordinates(x + ',' + (y - 1), number);
       }
-    }
 
-    // check bottom of number
-    for (let x = start; x <= end; x++) {
+      // check bottom of number
       if (grid[y + 1]?.[x] === GEAR) {
-        key = x + ',' + (y + 1);
-        if (gearCoordinatesWithAdjacentNumbers[key]?.length) {
-          gearCoordinatesWithAdjacentNumbers[key].push(number);
-        } else {
-          gearCoordinatesWithAdjacentNumbers[key] = [number];
-        }
+        recordAdjacentNumberForCoordinates(x + ',' + (y + 1), number);
       }
     }
   }
