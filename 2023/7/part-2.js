@@ -19,7 +19,7 @@ function remapCard(card) {
 }
 
 function getHandType(occurrences) {
-  let cardWithMostOccurrences = Object.keys(occurrences)[0];
+  let cardWithMostOccurrences = Object.keys(occurrences).find(k => k !== 'J') ?? 'J';
 
   for (const [key, value] of Object.entries(occurrences)) {
     if (key === 'J') {
